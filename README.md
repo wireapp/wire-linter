@@ -276,35 +276,59 @@ The report can also be exported as a PDF.
 
 ## Data Point Categories
 
-The gatherer collects data across these categories (117 target collectors):
+The gatherer collects data across these categories (193 target collectors):
 
-| Category | What's checked |
-|----------|----------------|
-| **Host** | Disk usage, memory, CPU count, load average, uptime, NTP sync |
-| **Kubernetes** | Node count and status, pod health, TLS certificates, ingress resources, metrics API, K8s version, container runtime, etcd health, PVC status, restart counts, helm chart versions |
-| **VMs** | Per-VM disk usage, memory usage, load average (for every kubenode, datanode, and the asset host) |
-| **Cassandra** | Cluster status (Up/Normal), node count, NTP sync, keyspaces, Spar IDP/tables, data disk usage |
-| **Elasticsearch** | Cluster health (green/yellow/red), node count, shard count, read-only mode detection |
-| **PostgreSQL** | Repmgr replication status and lag, node count (primary + standbys), version |
-| **MinIO** | Network health, drive status, erasure health, bucket count, version |
-| **RabbitMQ** | Cluster status, node count, queue depth, queue persistence, alarms, version |
-| **Redis** | Pod running status, maxmemory configuration, memory eviction policy |
-| **Wire Services** | Health and replica count for each service: brig, galley, cannon, cargohold, gundeck, spar, nginz, background-worker, sftd, coturn, webapp, team-settings, account-pages |
-| **Config Validation** | JSON Schema validation of service ConfigMaps (brig, galley, gundeck, cannon, cargohold, spar, background-worker, smallstep) against Wire version schemas (5.22 through 5.27) |
-| **Helm Config** | Feature flag completeness, database host consistency, ingress proxy protocol, SMS/SMTP placeholder detection, deeplink config, service log levels |
-| **Federation** | Cross-service federation domain consistency, brig domain matching cluster |
-| **MLS** | MLS readiness, E2EI validation, removal key configuration |
-| **DNS** | Subdomain resolution, email DNS records (SPF, DKIM, DMARC) |
-| **Network** | Port connectivity between nodes, SFTd reachability, TURN server connectivity |
-| **TLS** | Certificate validity and expiration |
-| **Security** | Default credentials, exposed endpoints, secret presence |
-| **Operations** | Backup freshness, log rotation, monitoring stack, SMTP service |
-| **OS** | Kubenode NTP sync, unprivileged port start, OS version matching |
-| **Migrations** | Database migration status |
+| Category | Targets | What's checked |
+|----------|---------|----------------|
+| **Kubernetes** | 32 | Node count and status, pod health, TLS certificates, ingress resources, metrics API, K8s version, container runtime, etcd health, PVC status, restart counts, helm chart versions, HPA, disruption budgets, resource limits, security contexts, scheduling, CoreDNS, stuck rollouts, warning events |
+| **Wire Services** | 29 | Health and replica count for each service: brig, galley, cannon, cargohold, gundeck, spar, nginz, background-worker, sftd, coturn, webapp, team-settings, account-pages, federator, ldap-scim-bridge, legalhold, asset-host, ingress response, status endpoints |
+| **Databases** | 28 | Cassandra cluster status/node count/NTP/keyspaces/disk; Elasticsearch cluster health/nodes/shards/read-only; PostgreSQL replication/lag/version; MinIO network/drives/erasure/buckets; RabbitMQ cluster/queues/alarms; Redis pod status/maxmemory/eviction |
+| **Config Validation** | 28 | JSON Schema validation of service ConfigMaps (brig, galley, gundeck, cannon, cargohold, spar, background-worker, smallstep) against 20 Wire version schemas (5.22.0 through 5.27.41), plus Helm config analysis for feature flags, database consistency, federation, calling, SMTP, log levels, deeplinks, proxy protocol, SSO, push notifications, legalhold, and more |
+| **Direct** | 17 | Direct-access checks (config extraction, DNS, Helm release data, RabbitMQ, security, TLS, Wire service status) for when targets can be queried without SSH |
+| **Client** | 15 | Client-side reachability: DNS resolution, TLS validity, webapp HTTP, API endpoints, WebSocket connectivity, calling/SFT servers, push notifications, federation endpoints |
+| **Host** | 8 | Disk usage, memory, CPU count, load average, uptime, NTP sync, OS details |
+| **Network** | 7 | Port connectivity between nodes, SFTd reachability, TURN server connectivity, AWS SNS/SQS reachability, internet connectivity, firewall rules |
+| **VMs** | 5 | Per-VM disk usage, memory usage, load average (for every kubenode, datanode, and the asset host) |
+| **TLS** | 5 | Certificate validity, chain verification, expiration, kubeadm certs, federation TLS |
+| **Operations** | 4 | Backup freshness, log rotation, monitoring stack, SMTP service |
+| **OS** | 3 | Kubenode NTP sync, unprivileged port start, OS version matching |
+| **DNS** | 3 | Subdomain resolution, email DNS records (SPF, DKIM, DMARC), federation SRV records |
+| **Security** | 3 | Default credentials, exposed endpoints (stern), internal endpoint protection |
+| **Helm** | 2 | Helm release inventory and version tracking |
+| **Secrets** | 2 | Kubernetes secret presence and validation |
+| **Migrations** | 1 | Database migration job status |
 
 ## Checker Rules
 
-Each data point is evaluated by a TypeScript checker class against threshold rules. Examples:
+The 172 TypeScript checker classes are organized into 23 categories:
+
+| Category | Checkers | What's evaluated |
+|----------|----------|-----------------|
+| Kubernetes | 37 | Node readiness, pod health, certificates, etcd, HPA, image consistency, disruption budgets, resource limits, security contexts, scheduling, CoreDNS, stuck rollouts, warning events, PVC status, restart counts |
+| Helm Config | 23 | Feature flags, database host consistency, federation config, calling setup, SMTP/SMS placeholders, proxy protocol, SSO, push notifications, legalhold, deeplinks, log levels, turn URIs |
+| Wire Services | 20 | Health and replica count for brig, galley, cannon, cargohold, gundeck, spar, nginz, background-worker, sftd, coturn, webapp, team-settings, account-pages, federator, ldap-scim-bridge, asset-host, helm releases, status endpoints, ingress response |
+| ConfigMap Validation | 10 | JSON Schema validation of brig, galley, gundeck, cannon, cargohold, spar, background-worker, smallstep ConfigMaps |
+| Client | 8 | DNS resolution, TLS validity, webapp reachability, API endpoints, WebSocket, calling servers, deeplink JSON, federation |
+| Host Admin | 7 | Disk usage, memory, CPU count, load average, uptime, NTP sync/offset |
+| Cassandra | 7 | Cluster status (Up/Normal), node count, NTP, data disk usage, keyspaces, Spar IDP/tables |
+| Networking | 7 | Port reachability, TURN connectivity, SFTd, port connectivity matrix, AWS SNS/SQS, internet connectivity |
+| RabbitMQ | 6 | Cluster status, node count, version, queue depth, alarms, queue persistence |
+| TLS | 5 | Certificate expiration, chain validity, kubeadm certs, OpenSearch cert key usage, federation TLS |
+| MLS | 5 | MLS readiness, E2EI validation, removal key, brig validator |
+| MinIO | 5 | Network status, drives, erasure health, bucket count, version |
+| Operations | 5 | Backup freshness, log rotation, monitoring stack, SMTP service, wire-server-deploy directory |
+| Upgrades | 5 | Migration jobs, helm release status, cert-manager test mode, version currency, ephemeral-in-production detection |
+| Elasticsearch | 4 | Cluster health (green/yellow/red), node count, shard count, read-only mode |
+| PostgreSQL | 4 | Replication status, node count, version, replication lag |
+| DNS | 3 | Subdomain resolution, email DNS records (SPF/DKIM/DMARC), federation SRV records |
+| OS | 3 | Kubenode NTP, unprivileged port start, OS version matching |
+| Redis | 3 | Pod status, maxmemory, memory eviction policy |
+| Security | 3 | Stern not exposed, internal endpoint protection, RabbitMQ default credentials |
+| VM | 3 | Per-VM disk usage, memory usage, load average |
+| Federation | 2 | Cross-service domain consistency, brig domain matching cluster |
+| Secrets | 1 | Required Kubernetes secrets present |
+
+Example threshold rules:
 
 - Disk usage > 85% = **unhealthy**, > 70% = **warning**
 - Load average > 2x CPU count = **unhealthy**, > 1x = **warning**
@@ -319,6 +343,8 @@ Each data point is evaluated by a TypeScript checker class against threshold rul
 - RabbitMQ alarms active = **unhealthy**
 - Redis maxmemory not configured = **warning**
 - Coturn memory limits missing = **warning**
+- Helm release in failed state = **unhealthy**
+- cert-manager using staging/test issuer in production = **warning**
 
 ## Development
 
