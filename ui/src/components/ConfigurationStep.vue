@@ -291,7 +291,7 @@
                             <InputText
                                 :id="`federation_domain_${index}`"
                                 :model-value="domain"
-                                @update:model-value="(val: string) => update_federation_domain(index, val)"
+                                @update:model-value="(val: string | undefined) => update_federation_domain(index, val ?? '')"
                                 :placeholder="`partner-${index + 1}.example.com`"
                                 fluid
                             />
