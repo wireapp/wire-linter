@@ -49,13 +49,6 @@ export interface CheckResult {
 
     // Raw output from consumed targets, shown in the details panel
     raw_output?: string
-    // Actionable remediation steps shown in the details panel, may contain
-    // Handlebars expressions rendered via template_data
-    fix_hint?: string
-    // Key-value context for Handlebars template rendering in status_reason,
-    // fix_hint, etc. Every return path should include this so template-aware
-    // features can operate on the result consistently.
-    template_data?: Record<string, unknown>
     // For ConfigMap validation checkers, the actual service config (YAML/JSON)
     // from the configmap's data key, rendered in the ConfigMap panel with syntax highlighting
     configmap_data?: string

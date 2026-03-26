@@ -207,8 +207,6 @@ export function use_result_trees(
                     // What we found — explains why we arrived at this verdict.
                     // Already rendered by registry.ts after checker execution.
                     status_reason: result.status_reason,
-                    // How to fix this — actionable steps (Markdown, present for non-healthy)
-                    fix_hint: result.fix_hint ?? '',
                     recommendation: result.recommendation || '',
                     // null = no raw_output, empty = target ran with no stdout
                     raw_output: result.raw_output ?? null,
@@ -216,7 +214,7 @@ export function use_result_trees(
                     configmap_data: result.configmap_data || '',
                     // Why this check exists — always present, from the checker class
                     explanation:      result.explanation,
-                    // Actionable remediation steps — already rendered by registry.ts
+                    // How to fix this — actionable steps (Markdown, present for non-healthy)
                     fix_hint:         result.fix_hint ?? '',
                     // Collection context from the primary DataPoint
                     commands:         result.commands         ?? [],
