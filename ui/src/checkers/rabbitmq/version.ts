@@ -38,12 +38,6 @@ export class VersionChecker extends BaseChecker {
     readonly explanation: string = 'Identifies the installed **RabbitMQ version** and flags **end-of-life** releases. EOL versions no longer receive security patches, leaving the message broker vulnerable to known exploits.'
 
     check(data: DataLookup): CheckResult {
-        // RabbitMQ is more critical when federation is enabled (async event processing).
-        // Without federation, downgrade failures from unhealthy to warning.
-        const rmq_failure_severity: 'unhealthy' | 'warning' = (
-            data.config?.options?.expect_federation ? 'unhealthy' : 'warning'
-        )
-
         const point = data.get_applicable('databases/rabbitmq/version') ?? data.get('direct/rabbitmq/version')
 
         // Didn't get the data

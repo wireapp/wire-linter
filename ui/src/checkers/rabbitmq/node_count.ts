@@ -17,12 +17,6 @@ export class NodeCountChecker extends BaseChecker {
     readonly explanation: string = 'Confirms the RabbitMQ cluster has at least **3 nodes** for high availability. Fewer nodes mean a single failure can take down the message broker and disrupt all Wire backend communication.'
 
     check(data: DataLookup): CheckResult {
-        // RabbitMQ is more critical when federation is enabled (async event processing).
-        // Without federation, downgrade failures from unhealthy to warning.
-        const rmq_failure_severity: 'unhealthy' | 'warning' = (
-            data.config?.options?.expect_federation ? 'unhealthy' : 'warning'
-        )
-
         const point = data.get_applicable('databases/rabbitmq/node_count') ?? data.get('direct/rabbitmq/node_count')
 
         // No data
