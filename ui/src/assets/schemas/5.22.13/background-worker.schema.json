@@ -1,0 +1,183 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.22.13/background-worker",
+    "title": "Background Worker ConfigMap",
+    "description": "JSON Schema for Wire Background Worker service configuration. Derived from Haskell source: services/background-worker/src/Wire/BackgroundWorker/Options.hs at chart/5.22.13",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "logLevel",
+        "backgroundWorker",
+        "federatorInternal",
+        "rabbitmq",
+        "backendNotificationPusher",
+        "cassandra"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string",
+            "enum": [
+                "Trace",
+                "Debug",
+                "Info",
+                "Warn",
+                "Error",
+                "Fatal"
+            ]
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:11 @chart/5.22.13]",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "backgroundWorker": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.13]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.13]"
+                }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:12 @chart/5.22.13]"
+        },
+        "federatorInternal": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.13]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.13]"
+                }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:13 @chart/5.22.13]"
+        },
+        "rabbitmq": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Parsed as RabbitMqAdminOpts first (with adminHost/adminPort), falls back to AmqpEndpoint. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:14 @chart/5.22.13]",
+            "required": [
+                "host",
+                "port",
+                "vHost"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.13]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.13]"
+                },
+                "vHost": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:79 @chart/5.22.13]"
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:66 @chart/5.22.13]"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:71 @chart/5.22.13]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:60 @chart/5.22.13]"
+                },
+                "adminHost": {
+                    "type": "string",
+                    "description": "Required for RabbitMqAdminOpts variant. [source: libs/extended/src/Network/AMQP/Extended.hs:81 @chart/5.22.13]"
+                },
+                "adminPort": {
+                    "type": "integer",
+                    "description": "Required for RabbitMqAdminOpts variant. [source: libs/extended/src/Network/AMQP/Extended.hs:82 @chart/5.22.13]"
+                }
+            }
+        },
+        "defederationTimeout": {
+            "type": "integer",
+            "description": "Optional. Seconds. No timeout if absent. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:16 @chart/5.22.13]"
+        },
+        "backendNotificationPusher": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "pushBackoffMinWait",
+                "pushBackoffMaxWait",
+                "remotesRefreshInterval"
+            ],
+            "properties": {
+                "pushBackoffMinWait": {
+                    "type": "integer",
+                    "description": "Microseconds. Min wait before first retry. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:29 @chart/5.22.13]"
+                },
+                "pushBackoffMaxWait": {
+                    "type": "integer",
+                    "description": "Microseconds. Upper cap on retry wait. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:33 @chart/5.22.13]"
+                },
+                "remotesRefreshInterval": {
+                    "type": "integer",
+                    "description": "Microseconds. Polling interval for remote federation list. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:36 @chart/5.22.13]"
+                }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:17 @chart/5.22.13]"
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.13]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.13]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:18 @chart/5.22.13]"
+        }
+    }
+}

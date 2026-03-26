@@ -1,0 +1,195 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.22.0/cargohold",
+    "title": "Cargohold Configuration",
+    "description": "Schema for cargohold.yaml ConfigMap Wire asset storage service. Derived from Haskell source: services/cargohold/src/CargoHold/Options.hs at chart/5.22.0",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "cargohold",
+        "aws",
+        "settings",
+        "brig",
+        "logLevel"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string",
+            "enum": [
+                "Trace",
+                "Debug",
+                "Info",
+                "Warn",
+                "Error",
+                "Fatal"
+            ],
+            "description": "[source: services/cargohold/src/CargoHold/Options.hs:168 @chart/5.22.0]"
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional. [source: services/cargohold/src/CargoHold/Options.hs:172 @chart/5.22.0]",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "logNetStrings": {
+            "type": "boolean",
+            "description": "Optional. Deprecated in favor of logFormat. [source: services/cargohold/src/CargoHold/Options.hs:171 @chart/5.22.0]"
+        },
+        "cargohold": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.0]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.0]"
+                }
+            },
+            "description": "[source: services/cargohold/src/CargoHold/Options.hs:158 @chart/5.22.0]"
+        },
+        "brig": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.0]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.0]"
+                }
+            },
+            "description": "[source: services/cargohold/src/CargoHold/Options.hs:164 @chart/5.22.0]"
+        },
+        "federator": {
+            "type": "object",
+            "description": "Optional. Federator endpoint. [source: services/cargohold/src/CargoHold/Options.hs:162 @chart/5.22.0]",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.0]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.0]"
+                }
+            }
+        },
+        "aws": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "s3Endpoint",
+                "s3Bucket"
+            ],
+            "properties": {
+                "s3Endpoint": { "type": "string", "description": "URL like https://s3.eu-west-1.amazonaws.com" },
+                "s3AddressingStyle": {
+                    "type": "string",
+                    "description": "Optional. Default: path-style for backward compat. [source: services/cargohold/src/CargoHold/Options.hs:89 @chart/5.22.0]",
+                    "enum": [
+                        "auto",
+                        "path",
+                        "virtual"
+                    ]
+                },
+                "s3DownloadEndpoint": {
+                    "type": "string",
+                    "description": "Optional. Separate endpoint for client download links. [source: services/cargohold/src/CargoHold/Options.hs:94 @chart/5.22.0]"
+                },
+                "s3Bucket": {
+                    "type": "string",
+                    "description": "[source: services/cargohold/src/CargoHold/Options.hs:96 @chart/5.22.0]"
+                },
+                "s3Compatibility": {
+                    "type": "string",
+                    "description": "Optional. [source: services/cargohold/src/CargoHold/Options.hs:98 @chart/5.22.0]",
+                    "enum": [
+                        "scality-ring"
+                    ]
+                },
+                "cloudFront": {
+                    "type": "object",
+                    "description": "Optional. CloudFront signing config. Cannot be used with multiIngress. [source: services/cargohold/src/CargoHold/Options.hs:100 @chart/5.22.0]",
+                    "additionalProperties": true,
+                    "required": [
+                        "domain",
+                        "keyPairId",
+                        "privateKey"
+                    ],
+                    "properties": {
+                        "domain": {
+                            "type": "string",
+                            "description": "[source: services/cargohold/src/CargoHold/Options.hs:38 @chart/5.22.0]"
+                        },
+                        "keyPairId": {
+                            "type": "string",
+                            "description": "[source: services/cargohold/src/CargoHold/Options.hs:40 @chart/5.22.0]"
+                        },
+                        "privateKey": {
+                            "type": "string",
+                            "description": "File path to CloudFront private key [source: services/cargohold/src/CargoHold/Options.hs:42 @chart/5.22.0]"
+                        }
+                    }
+                },
+                "multiIngress": {
+                    "type": "object",
+                    "description": "Optional. Map from Z-Host header to S3 download endpoint. Cannot be used with cloudFront or s3DownloadEndpoint. [source: services/cargohold/src/CargoHold/Options.hs:108 @chart/5.22.0]",
+                    "additionalProperties": { "type": "string" }
+                }
+            },
+            "description": "[source: services/cargohold/src/CargoHold/Options.hs:159 @chart/5.22.0]"
+        },
+        "settings": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "maxTotalBytes",
+                "downloadLinkTTL",
+                "federationDomain",
+                "disabledAPIVersions"
+            ],
+            "properties": {
+                "maxTotalBytes": {
+                    "type": "integer",
+                    "description": "Maximum allowed upload size in bytes [source: services/cargohold/src/CargoHold/Options.hs:134 @chart/5.22.0]"
+                },
+                "downloadLinkTTL": {
+                    "type": "integer",
+                    "description": "TTL for download links in seconds [source: services/cargohold/src/CargoHold/Options.hs:136 @chart/5.22.0]"
+                },
+                "federationDomain": {
+                    "type": "string",
+                    "description": "Federation domain. Must match across all services. [source: services/cargohold/src/CargoHold/Options.hs:147 @chart/5.22.0]"
+                },
+                "disabledAPIVersions": {
+                    "type": "array",
+                    "description": "Array of version strings: v0..v12 or 'development' [source: services/cargohold/src/CargoHold/Options.hs:148 @chart/5.22.0]",
+                    "items": { "type": "string" }
+                }
+            },
+            "description": "[source: services/cargohold/src/CargoHold/Options.hs:160 @chart/5.22.0]"
+        }
+    }
+}

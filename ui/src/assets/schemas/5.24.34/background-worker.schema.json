@@ -1,0 +1,402 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.24.34/background-worker",
+    "title": "Background Worker ConfigMap",
+    "description": "JSON Schema for Wire Background Worker service configuration. Derived from Haskell source: services/background-worker/src/Wire/BackgroundWorker/Options.hs at chart/5.24.34",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "logLevel",
+        "backgroundWorker",
+        "federatorInternal",
+        "rabbitmq",
+        "backendNotificationPusher",
+        "cassandra",
+        "cassandraGalley",
+        "cassandraBrig",
+        "postgresql",
+        "postgresqlPool",
+        "postgresMigration",
+        "migrateConversations",
+        "migrateConversationsOptions",
+        "backgroundJobs",
+        "federationDomain",
+        "brig",
+        "gundeck"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string",
+            "enum": [
+                "Trace",
+                "Debug",
+                "Info",
+                "Warn",
+                "Error",
+                "Fatal"
+            ]
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:35 @chart/5.24.34]",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "backgroundWorker": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:36 @chart/5.24.34]"
+        },
+        "federatorInternal": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:37 @chart/5.24.34]"
+        },
+        "rabbitmq": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Parsed as RabbitMqAdminOpts first (with adminHost/adminPort), falls back to AmqpEndpoint. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:40 @chart/5.24.34]",
+            "required": [
+                "host",
+                "port",
+                "vHost"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                },
+                "vHost": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:96 @chart/5.24.34]"
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:83 @chart/5.24.34]"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:88 @chart/5.24.34]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:77 @chart/5.24.34]"
+                },
+                "adminHost": {
+                    "type": "string",
+                    "description": "Required for RabbitMqAdminOpts variant. [source: libs/extended/src/Network/AMQP/Extended.hs:98 @chart/5.24.34]"
+                },
+                "adminPort": {
+                    "type": "integer",
+                    "description": "Required for RabbitMqAdminOpts variant. [source: libs/extended/src/Network/AMQP/Extended.hs:99 @chart/5.24.34]"
+                }
+            }
+        },
+        "defederationTimeout": {
+            "type": "integer",
+            "description": "Optional. Seconds. No timeout if absent. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:42 @chart/5.24.34]"
+        },
+        "backendNotificationPusher": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "pushBackoffMinWait",
+                "pushBackoffMaxWait",
+                "remotesRefreshInterval"
+            ],
+            "properties": {
+                "pushBackoffMinWait": {
+                    "type": "integer",
+                    "description": "Microseconds. Min wait before first retry. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:66 @chart/5.24.34]"
+                },
+                "pushBackoffMaxWait": {
+                    "type": "integer",
+                    "description": "Microseconds. Upper cap on retry wait. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:70 @chart/5.24.34]"
+                },
+                "remotesRefreshInterval": {
+                    "type": "integer",
+                    "description": "Microseconds. Polling interval for remote federation list. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:73 @chart/5.24.34]"
+                }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:43 @chart/5.24.34]"
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            },
+            "description": "[source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:44 @chart/5.24.34]"
+        },
+        "cassandraGalley": {
+            "type": "object",
+            "description": "Cassandra settings for Galley keyspace. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:45 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            }
+        },
+        "postgresql": {
+            "type": "object",
+            "description": "PostgreSQL connection as libpq key=value map. Typical keys: host, port, user, dbname, password, sslmode. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:49 @chart/5.24.34]",
+            "additionalProperties": { "type": "string" }
+        },
+        "postgresqlPassword": {
+            "type": "string",
+            "description": "Optional. File path to PostgreSQL password. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:50 @chart/5.24.34]"
+        },
+        "postgresqlPool": {
+            "type": "object",
+            "description": "PostgreSQL connection pool configuration. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:51 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "size",
+                "acquisitionTimeout",
+                "agingTimeout",
+                "idlenessTimeout"
+            ],
+            "properties": {
+                "size": {
+                    "type": "integer",
+                    "description": "Number of connections in the pool [source: libs/extended/src/Hasql/Pool/Extended.hs:46 @chart/5.24.34]"
+                },
+                "acquisitionTimeout": {
+                    "type": "string",
+                    "description": "Duration string, e.g. '30s', '5m'. Max time to wait for a connection. [source: libs/extended/src/Hasql/Pool/Extended.hs:37 @chart/5.24.34]"
+                },
+                "agingTimeout": {
+                    "type": "string",
+                    "description": "Duration string. Max lifetime of a connection. [source: libs/extended/src/Hasql/Pool/Extended.hs:38 @chart/5.24.34]"
+                },
+                "idlenessTimeout": {
+                    "type": "string",
+                    "description": "Duration string. Max idle time before connection is closed. [source: libs/extended/src/Hasql/Pool/Extended.hs:39 @chart/5.24.34]"
+                }
+            }
+        },
+        "cassandraBrig": {
+            "type": "object",
+            "description": "Cassandra settings for Brig keyspace. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:46 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            }
+        },
+        "postgresMigration": {
+            "type": "object",
+            "description": "PostgreSQL migration options. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:52 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "conversation"
+            ],
+            "properties": {
+                "conversation": {
+                    "type": "string",
+                    "description": "Storage location for conversations.",
+                    "enum": [
+                        "cassandra",
+                        "migration-to-postgresql",
+                        "postgresql"
+                    ]
+                }
+            }
+        },
+        "migrateConversations": {
+            "type": "boolean",
+            "description": "Whether to run conversation migration from Cassandra to PostgreSQL. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:53 @chart/5.24.34]"
+        },
+        "migrateConversationsOptions": {
+            "type": "object",
+            "description": "Options for conversation migration processing. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:54 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "pageSize",
+                "parallelism"
+            ],
+            "properties": {
+                "pageSize": { "type": "integer", "description": "Number of conversations to process per page." },
+                "parallelism": { "type": "integer", "description": "Number of parallel migration workers." }
+            }
+        },
+        "backgroundJobs": {
+            "type": "object",
+            "description": "Background jobs processing configuration. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:55 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "concurrency",
+                "jobTimeout",
+                "maxAttempts"
+            ],
+            "properties": {
+                "concurrency": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000,
+                    "description": "Maximum parallel jobs processed. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:90 @chart/5.24.34]"
+                },
+                "jobTimeout": {
+                    "type": "string",
+                    "description": "Duration string, e.g. '30s', '5m'. Per-attempt timeout. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:92 @chart/5.24.34]"
+                },
+                "maxAttempts": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000,
+                    "description": "Total attempts including first run. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:94 @chart/5.24.34]"
+                }
+            }
+        },
+        "federationDomain": {
+            "type": "string",
+            "description": "Federation domain. Must match across all services. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:56 @chart/5.24.34]"
+        },
+        "brig": {
+            "type": "object",
+            "description": "Brig endpoint. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:38 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                }
+            }
+        },
+        "gundeck": {
+            "type": "object",
+            "description": "Gundeck endpoint. [source: services/background-worker/src/Wire/BackgroundWorker/Options.hs:39 @chart/5.24.34]",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.34]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.34]"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "wire-linter",
+    "private": true,
+    "scripts": {
+        "dev": "cd ui && npx vite"
+    }
+}

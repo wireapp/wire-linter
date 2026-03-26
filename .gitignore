@@ -1,0 +1,14 @@
+wire-docs/
+wire-server/
+wire-server-deploy/
+node_modules/
+ui/node_modules/
+.playwright-mcp/
+**/__pycache__/
+**/__init__.py
+*.pyc
+*.pyo
+.python-version
+CLAUDE.md 
+docs/ 
+

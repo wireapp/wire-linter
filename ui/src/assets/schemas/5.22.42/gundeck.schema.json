@@ -1,0 +1,274 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.22.42/gundeck",
+    "title": "Gundeck Configuration",
+    "description": "Schema for gundeck.yaml ConfigMap Wire push notification service. Derived from Haskell source: services/gundeck/src/Gundeck/Options.hs at chart/5.22.42",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "gundeck",
+        "brig",
+        "cassandra",
+        "redis",
+        "aws",
+        "rabbitmq",
+        "settings",
+        "logLevel"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string",
+            "enum": [
+                "Trace",
+                "Debug",
+                "Info",
+                "Warn",
+                "Error",
+                "Fatal"
+            ]
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional.",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "logNetStrings": { "type": "boolean", "description": "Optional. Deprecated in favor of logFormat." },
+        "discoUrl": { "type": "string", "description": "Optional. Service discovery URL." },
+        "gundeck": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.42]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.42]"
+                }
+            }
+        },
+        "brig": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.42]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.42]"
+                }
+            }
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.42]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.42]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            }
+        },
+        "redis": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port",
+                "connectionMode",
+                "enableTls",
+                "insecureSkipVerifyTls"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.42]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.42]"
+                },
+                "connectionMode": {
+                    "type": "string",
+                    "enum": [
+                        "master",
+                        "cluster"
+                    ]
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:66 @chart/5.22.42]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:60 @chart/5.22.42]"
+                },
+                "tlsCa": { "type": "string", "description": "Optional. CA cert path." }
+            }
+        },
+        "redisAdditionalWrite": {
+            "type": "object",
+            "description": "Optional. Secondary Redis for additional writes.",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port",
+                "connectionMode",
+                "enableTls",
+                "insecureSkipVerifyTls"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.42]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.42]"
+                },
+                "connectionMode": {
+                    "type": "string",
+                    "enum": [
+                        "master",
+                        "cluster"
+                    ]
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:66 @chart/5.22.42]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:60 @chart/5.22.42]"
+                },
+                "tlsCa": { "type": "string" }
+            }
+        },
+        "rabbitmq": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port",
+                "vHost"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:89 @chart/5.22.42]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:78 @chart/5.22.42]"
+                },
+                "vHost": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:79 @chart/5.22.42]"
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:66 @chart/5.22.42]"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:71 @chart/5.22.42]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:60 @chart/5.22.42]"
+                }
+            }
+        },
+        "aws": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "account",
+                "region",
+                "arnEnv",
+                "queueName",
+                "sqsEndpoint",
+                "snsEndpoint"
+            ],
+            "properties": {
+                "account": { "type": "string", "description": "AWS account ID" },
+                "region": { "type": "string", "description": "AWS region, e.g. eu-west-1" },
+                "arnEnv": { "type": "string", "description": "ARN environment scope" },
+                "queueName": { "type": "string" },
+                "sqsEndpoint": { "type": "string", "description": "URL like https://sqs.eu-west-1.amazonaws.com" },
+                "snsEndpoint": { "type": "string", "description": "URL like https://sns.eu-west-1.amazonaws.com" }
+            }
+        },
+        "settings": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "httpPoolSize",
+                "notificationTTL",
+                "disabledAPIVersions"
+            ],
+            "properties": {
+                "httpPoolSize": { "type": "integer" },
+                "notificationTTL": { "type": "integer", "description": "Seconds. Stored notification TTL." },
+                "maxConcurrentNativePushes": {
+                    "type": "object",
+                    "description": "Optional.",
+                    "additionalProperties": true,
+                    "properties": {
+                        "hard": { "type": "integer" },
+                        "soft": { "type": "integer" }
+                    }
+                },
+                "perNativePushConcurrency": { "type": "integer", "description": "Optional. Default: unbounded." },
+                "sqsThrottleMillis": { "type": "integer", "description": "Optional. Default: 500" },
+                "disabledAPIVersions": {
+                    "type": "array",
+                    "description": "Array of version strings: v0..v12 or 'development'",
+                    "items": { "type": "string" }
+                },
+                "maxPayloadLoadSize": { "type": "integer", "description": "Optional. Max bytes for payload loading." },
+                "internalPageSize": { "type": "integer", "description": "Optional. Cassandra page size for notifications." },
+                "cellsEventQueue": { "type": "string", "description": "Optional. RabbitMQ queue name for Cells events." }
+            }
+        }
+    }
+}

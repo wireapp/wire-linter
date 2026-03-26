@@ -1,0 +1,211 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.24.13/spar",
+    "title": "Spar ConfigMap",
+    "description": "JSON Schema for Wire Spar (SSO/SAML/SCIM) service configuration. Derived from Haskell source: services/spar/src/Spar/Options.hs at chart/5.24.13",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "saml",
+        "brig",
+        "galley",
+        "cassandra",
+        "maxttlAuthreq",
+        "maxttlAuthresp",
+        "maxScimTokens",
+        "richInfoLimit",
+        "disabledAPIVersions",
+        "scimBaseUri"
+    ],
+    "properties": {
+        "logNetStrings": {
+            "type": "boolean",
+            "description": "Optional. Deprecated in favor of logFormat. [source: services/spar/src/Spar/Options.hs:58 @chart/5.24.13]"
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional. [source: services/spar/src/Spar/Options.hs:59 @chart/5.24.13]",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "discoUrl": {
+            "type": "string",
+            "description": "Optional. AWS discovery URL for Cassandra. [source: services/spar/src/Spar/Options.hs:57 @chart/5.24.13]"
+        },
+        "saml": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "SAML/SSO configuration. Requires either single-ingress (spAppUri+spSsoUri+contacts) or multi-ingress (spDomainConfigs), not both.",
+            "required": [
+                "logLevel",
+                "spHost",
+                "spPort"
+            ],
+            "properties": {
+                "logLevel": {
+                    "type": "string",
+                    "enum": [
+                        "Trace",
+                        "Debug",
+                        "Info",
+                        "Warn",
+                        "Error",
+                        "Fatal"
+                    ]
+                },
+                "spHost": { "type": "string" },
+                "spPort": { "type": "integer" },
+                "spAppUri": { "type": "string", "description": "Single-ingress mode. Mutually exclusive with spDomainConfigs." },
+                "spSsoUri": { "type": "string", "description": "Single-ingress mode. Mutually exclusive with spDomainConfigs." },
+                "contacts": {
+                    "type": "array",
+                    "description": "Single-ingress mode. Mutually exclusive with spDomainConfigs.",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                            "type"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "ContactTechnical",
+                                    "ContactSupport",
+                                    "ContactAdministrative",
+                                    "ContactBilling",
+                                    "ContactOther"
+                                ]
+                            },
+                            "company": { "type": "string" },
+                            "givenName": { "type": "string" },
+                            "surname": { "type": "string" },
+                            "email": { "type": "string" },
+                            "phone": { "type": "string" }
+                        }
+                    }
+                },
+                "spDomainConfigs": {
+                    "type": "object",
+                    "description": "Multi-ingress mode. Map from domain to config. Mutually exclusive with spAppUri/spSsoUri/contacts.",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                            "spAppUri",
+                            "spSsoUri",
+                            "contacts"
+                        ],
+                        "properties": {
+                            "spAppUri": { "type": "string" },
+                            "spSsoUri": { "type": "string" },
+                            "contacts": {
+                                "type": "array",
+                                "items": { "type": "object", "additionalProperties": true }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "brig": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.13]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.13]"
+                }
+            },
+            "description": "[source: services/spar/src/Spar/Options.hs:46 @chart/5.24.13]"
+        },
+        "galley": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.13]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.13]"
+                }
+            },
+            "description": "[source: services/spar/src/Spar/Options.hs:47 @chart/5.24.13]"
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.13]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.13]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            },
+            "description": "[source: services/spar/src/Spar/Options.hs:48 @chart/5.24.13]"
+        },
+        "maxttlAuthreq": {
+            "type": "integer",
+            "description": "Max TTL for SAML AuthnRequest in seconds [source: services/spar/src/Spar/Options.hs:49 @chart/5.24.13]"
+        },
+        "maxttlAuthresp": {
+            "type": "integer",
+            "description": "Max TTL for SAML AuthnResponse in seconds [source: services/spar/src/Spar/Options.hs:50 @chart/5.24.13]"
+        },
+        "maxScimTokens": {
+            "type": "integer",
+            "description": "Maximum number of SCIM tokens per team [source: services/spar/src/Spar/Options.hs:52 @chart/5.24.13]"
+        },
+        "richInfoLimit": {
+            "type": "integer",
+            "description": "Maximum rich info size [source: services/spar/src/Spar/Options.hs:54 @chart/5.24.13]"
+        },
+        "disabledAPIVersions": {
+            "type": "array",
+            "description": "Array of version strings: v0..v12 or 'development' [source: services/spar/src/Spar/Options.hs:60 @chart/5.24.13]",
+            "items": { "type": "string" }
+        },
+        "scimBaseUri": {
+            "type": "string",
+            "description": "Base URI for SCIM endpoints. Must be a valid URI. [source: services/spar/src/Spar/Options.hs:61 @chart/5.24.13]"
+        }
+    }
+}

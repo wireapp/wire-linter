@@ -1,0 +1,423 @@
+/* Wire Fact Gathering Tool - Global Styles */
+/* Uses Inter font and Wire brand colors */
+
+:root {
+    --wire-blue: #0667C8;
+    --wire-blue-hover: #0553a3;
+    --wire-black: #000000;
+    --wire-dark-gray: #333333;
+    --wire-medium-gray: #666666;
+    --wire-light-gray: #f5f5f5;
+    --wire-border-gray: #e0e0e0;
+    --wire-white: #ffffff;
+    --wire-green: #2da44e;
+    --wire-red: #cf222e;
+    --wire-orange: #d4820c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--wire-white);
+    color: var(--wire-dark-gray);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+    height: 100%;
+    width: 100%;
+}
+
+/* Override PrimeVue primary color to Wire blue */
+:root {
+    --p-primary-color: #0667C8;
+    --p-primary-contrast-color: #ffffff;
+}
+
+/* Terminal-style code blocks */
+.terminal-block {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    position: relative;
+}
+
+.terminal-block .prompt {
+    color: #7ec8e3;
+    user-select: none;
+}
+
+.terminal-block .command {
+    color: #ffffff;
+}
+
+/* Copy button in terminal blocks */
+.copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.copy-btn.copied {
+    background: rgba(45, 164, 78, 0.3);
+    border-color: rgba(45, 164, 78, 0.5);
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.healthy {
+    background-color: #dafbe1;
+    color: #1a7f37;
+}
+
+.status-badge.unhealthy {
+    background-color: #ffebe9;
+    color: #cf222e;
+}
+
+.status-badge.warning {
+    background-color: #fff8c5;
+    color: #9a6700;
+}
+
+.status-badge.gather_failure {
+    background-color: #fff8c5;
+    color: #9a6700;
+}
+
+.status-badge.not_applicable {
+    background-color: #f0f0f0;
+    color: #757575;
+}
+
+/* Summary cards */
+.summary-cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.summary-card {
+    flex: 1;
+    min-width: 140px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--wire-border-gray);
+}
+
+.summary-card .count {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.summary-card .label {
+    font-size: 13px;
+    color: var(--wire-medium-gray);
+    margin-top: 4px;
+}
+
+.summary-card.total          .count { color: var(--wire-blue); }
+.summary-card.healthy        .count { color: var(--wire-green); }
+.summary-card.unhealthy      .count { color: var(--wire-red); }
+.summary-card.warning        .count { color: var(--wire-orange); }
+.summary-card.gather-failure  .count { color: var(--wire-orange); }
+.summary-card.not-applicable .count { color: #757575; }
+
+/* ── Step navigation bar (shared across all wizard steps) ──────────────────── */
+/* Back on the left, primary action on the right, separated by a top border */
+
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--wire-border-gray);
+}
+
+/* When multiple buttons sit on the same side (e.g. Skip + Next in Step 1) */
+.step-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ── Shared tree layout ────────────────────────────────────────────────────── */
+/* Used by both the check results tree (CheckResultsTree.vue) and the data
+   points tree (App.vue data tab). Moved here from App.vue scoped styles to
+   avoid duplication across components. */
+
+.results-tree {
+    border: 1px solid var(--wire-border-gray);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tree-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--wire-light-gray);
+    border-bottom: 1px solid var(--wire-border-gray);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--wire-medium-gray);
+}
+
+.tree-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--wire-border-gray);
+    font-size: 13px;
+    transition: background 0.1s;
+}
+
+.tree-row-group {
+    background: var(--wire-light-gray);
+    cursor: pointer;
+}
+
+.tree-row-group:hover {
+    background: #ececec;
+}
+
+.tree-row-subgroup {
+    background: #fafafa;
+    cursor: pointer;
+}
+
+.tree-row-subgroup:hover {
+    background: #f0f0f0;
+}
+
+.tree-row-leaf:hover {
+    background: #fafafa;
+}
+
+.tree-group:last-child .tree-row:last-child {
+    border-bottom: none;
+}
+
+.group-label {
+    font-weight: 600;
+    color: var(--wire-dark-gray);
+}
+
+.group-summary {
+    font-size: 12px;
+    color: var(--wire-medium-gray);
+}
+
+.value-cell {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+}
+
+/* ── Details toggle button (eye icon) in tree table rows ───────────────────── */
+
+.details-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--wire-border-gray);
+    background: var(--wire-white);
+    color: var(--wire-medium-gray);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.details-toggle:hover {
+    background: var(--wire-light-gray);
+    color: var(--wire-dark-gray);
+    border-color: #ccc;
+}
+
+.details-toggle.active {
+    background: var(--wire-blue);
+    color: white;
+    border-color: var(--wire-blue);
+}
+
+.details-toggle i {
+    font-size: 12px;
+}
+
+/* ── Details panel - terminal-style raw output inline below a row ──────────── */
+
+.details-panel {
+    border-bottom: 1px solid var(--wire-border-gray);
+    overflow: hidden;
+    animation: slide-down 0.2s ease;
+}
+
+@keyframes slide-down {
+    from { opacity: 0; max-height: 0; }
+    to { opacity: 1; max-height: 600px; }
+}
+
+.details-panel-header {
+    background: #1e1e30;
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.details-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7ec8e3;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.details-panel-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.details-panel-desc {
+    color: #888;
+    font-size: 11px;
+    font-style: italic;
+}
+
+.details-close {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #aaa;
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.details-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* Shown in the details panel when there is no raw output to display */
+.details-no-output {
+    background: #0d0d1a;
+    color: #888;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Terminal-style preformatted raw output */
+.details-terminal {
+    background: #0d0d1a;
+    color: #d4d4d4;
+    padding: 14px 16px;
+    margin: 0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for terminal panels */
+.details-terminal::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.details-terminal::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+.details-terminal::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+
+.details-terminal::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* ── Syntax highlighting token classes ─────────────────────────────────────── */
+/* Applied to spans injected via v-html from the syntax highlighter */
+
+.hl-key         { color: #7ec8e3; }  /* cyan   - YAML keys, JSON property names */
+.hl-string      { color: #98d982; }  /* green  - string values */
+.hl-number      { color: #f0a050; }  /* orange - numeric values */
+.hl-keyword     { color: #c792ea; }  /* purple - true, false, null, block scalars */
+.hl-comment     { color: #546e7a; }  /* gray   - YAML/JSON comments */
+.hl-punctuation { color: #89ddff; }  /* sky    - colons, list dashes, brackets */
+.hl-doc-marker  { color: #546e7a; font-weight: 600; }  /* gray - --- ... markers */
+.hl-meta        { color: #ffcb6b; }  /* yellow - anchors & aliases */
+
+/* ── Scrollbar styling ─────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--wire-light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}

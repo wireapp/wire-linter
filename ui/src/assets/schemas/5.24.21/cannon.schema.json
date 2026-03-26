@@ -1,0 +1,203 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.24.21/cannon",
+    "title": "Cannon Configuration",
+    "description": "Schema for cannon.yaml ConfigMap Wire WebSocket push service. Derived from Haskell source: services/cannon/src/Cannon/Options.hs at chart/5.24.21",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "cannon",
+        "gundeck",
+        "rabbitmq",
+        "logLevel",
+        "drainOpts",
+        "disabledAPIVersions",
+        "cassandra",
+        "notificationTTL"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string",
+            "enum": [
+                "Trace",
+                "Debug",
+                "Info",
+                "Warn",
+                "Error",
+                "Fatal"
+            ],
+            "description": "[source: services/cannon/src/Cannon/Options.hs:152 @chart/5.24.21]"
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional. [source: services/cannon/src/Cannon/Options.hs:154 @chart/5.24.21]",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "logNetStrings": {
+            "type": "boolean",
+            "description": "Optional. Deprecated in favor of logFormat. [source: services/cannon/src/Cannon/Options.hs:153 @chart/5.24.21]"
+        },
+        "cannon": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                },
+                "externalHost": { "type": "string", "description": "Optional." },
+                "externalHostFile": { "type": "string", "description": "Optional. File path to read external host from." }
+            },
+            "description": "[source: services/cannon/src/Cannon/Options.hs:149 @chart/5.24.21]"
+        },
+        "gundeck": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                }
+            },
+            "description": "[source: services/cannon/src/Cannon/Options.hs:150 @chart/5.24.21]"
+        },
+        "rabbitmq": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port",
+                "vHost"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                },
+                "vHost": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:96 @chart/5.24.21]"
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:83 @chart/5.24.21]"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:88 @chart/5.24.21]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:77 @chart/5.24.21]"
+                }
+            },
+            "description": "[source: services/cannon/src/Cannon/Options.hs:151 @chart/5.24.21]"
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            },
+            "description": "[source: services/cannon/src/Cannon/Options.hs:158 @chart/5.24.21]"
+        },
+        "drainOpts": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "gracePeriodSeconds",
+                "millisecondsBetweenBatches",
+                "minBatchSize"
+            ],
+            "properties": {
+                "gracePeriodSeconds": { "type": "integer", "description": "Must not be 0" },
+                "millisecondsBetweenBatches": { "type": "integer", "description": "Must not be 0" },
+                "minBatchSize": { "type": "integer" }
+            },
+            "description": "[source: services/cannon/src/Cannon/Options.hs:155 @chart/5.24.21]"
+        },
+        "wsOpts": {
+            "type": "object",
+            "description": "Optional. Defaults to activityTimeout=30000000, pongTimeout=30000000 (30s in microseconds). [source: services/cannon/src/Cannon/Options.hs:156 @chart/5.24.21]",
+            "additionalProperties": true,
+            "properties": {
+                "activityTimeout": {
+                    "type": "integer",
+                    "description": "Microseconds. Default: 30000000 [source: services/cannon/src/Cannon/Options.hs:98 @chart/5.24.21]"
+                },
+                "pongTimeout": {
+                    "type": "integer",
+                    "description": "Microseconds. Default: 30000000 [source: services/cannon/src/Cannon/Options.hs:84 @chart/5.24.21]"
+                }
+            }
+        },
+        "disabledAPIVersions": {
+            "type": "array",
+            "description": "Array of version strings: v0..v12 or 'development' [source: services/cannon/src/Cannon/Options.hs:157 @chart/5.24.21]",
+            "items": { "type": "string" }
+        },
+        "rabbitMqMaxConnections": {
+            "type": "integer",
+            "description": "Optional. Default: 1000. Must be > 0. [source: services/cannon/src/Cannon/Options.hs:159 @chart/5.24.21]"
+        },
+        "rabbitMqMaxChannels": {
+            "type": "integer",
+            "description": "Optional. Default: 300. Must be > 0. [source: services/cannon/src/Cannon/Options.hs:160 @chart/5.24.21]"
+        },
+        "notificationTTL": {
+            "type": "integer",
+            "description": "Notification TTL in seconds. [source: services/cannon/src/Cannon/Options.hs:161 @chart/5.24.21]"
+        }
+    }
+}

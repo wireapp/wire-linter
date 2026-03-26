@@ -1,0 +1,360 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.24.21/galley",
+    "title": "Galley ConfigMap",
+    "description": "Schema for Wire galley (conversations/teams service) configuration",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "logLevel",
+        "galley",
+        "cassandra",
+        "postgresql",
+        "brig",
+        "gundeck",
+        "spar",
+        "settings",
+        "postgresMigration",
+        "postgresqlPool"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string"
+        },
+        "logFormat": {
+            "type": "string"
+        },
+        "logNetStrings": {
+            "type": "boolean"
+        },
+        "galley": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                }
+            }
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                        }
+                    }
+                },
+                "keyspace": {
+                    "type": "string"
+                }
+            }
+        },
+        "postgresql": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port",
+                "user",
+                "dbname"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                },
+                "user": {
+                    "type": "string"
+                },
+                "dbname": {
+                    "type": "string"
+                }
+            }
+        },
+        "brig": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                }
+            }
+        },
+        "gundeck": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                }
+            }
+        },
+        "spar": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.24.21]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.24.21]"
+                }
+            }
+        },
+        "settings": {
+            "type": "object",
+            "required": [
+                "httpPoolSize",
+                "maxTeamSize",
+                "maxConvSize",
+                "federationDomain",
+                "featureFlags",
+                "intraListing",
+                "disabledAPIVersions",
+                "passwordHashingOptions",
+                "passwordHashingRateLimit"
+            ],
+            "properties": {
+                "httpPoolSize": {
+                    "type": "integer"
+                },
+                "maxTeamSize": {
+                    "type": "integer"
+                },
+                "maxConvSize": {
+                    "type": "integer"
+                },
+                "federationDomain": {
+                    "type": "string"
+                },
+                "featureFlags": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "intraListing": {
+                    "type": "boolean",
+                    "description": "Whether to call Brig for device listing."
+                },
+                "maxFanoutSize": {
+                    "type": "integer",
+                    "description": "Max number of team members to fanout events to. Range: 1 to HardTruncationLimit."
+                },
+                "conversationCodeURI": {
+                    "type": "string",
+                    "description": "URI prefix for conversations with access mode 'code'."
+                },
+                "multiIngress": {
+                    "type": "object",
+                    "description": "Map from Z-Host header to URI prefix for guest links. Mutually exclusive with conversationCodeURI.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "mlsPrivateKeyPaths": {
+                    "type": "object",
+                    "description": "MLS private key paths configuration.",
+                    "additionalProperties": true
+                },
+                "disabledAPIVersions": {
+                    "type": "array",
+                    "description": "Set of disabled API version expressions.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "guestLinkTTLSeconds": {
+                    "type": "integer",
+                    "description": "Lifetime of a conversation guest link in seconds. Range: 1-31536000 (max 1 year)."
+                },
+                "passwordHashingOptions": {
+                    "type": "object",
+                    "description": "Password hashing algorithm configuration.",
+                    "additionalProperties": true
+                },
+                "passwordHashingRateLimit": {
+                    "type": "object",
+                    "description": "Rate limiting config for password hashing operations.",
+                    "properties": {
+                        "ipAddrLimit": {
+                            "type": "object",
+                            "description": "Token bucket config for IP address rate limiting.",
+                            "properties": {
+                                "burst": {
+                                    "type": "integer",
+                                    "description": "Burst operations allowed."
+                                },
+                                "inverseRate": {
+                                    "type": "integer",
+                                    "description": "Avg. microseconds per operation. 0 disables rate limiting."
+                                }
+                            }
+                        },
+                        "userLimit": {
+                            "type": "object",
+                            "description": "Token bucket config for per-user rate limiting.",
+                            "properties": {
+                                "burst": {
+                                    "type": "integer"
+                                },
+                                "inverseRate": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "internalLimit": {
+                            "type": "object",
+                            "description": "Token bucket config for internal rate limiting.",
+                            "properties": {
+                                "burst": {
+                                    "type": "integer"
+                                },
+                                "inverseRate": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "ipv4CidrBlock": {
+                            "type": "integer",
+                            "description": "Number of bits of IPv4 address used for rate limiting (0-32)."
+                        },
+                        "ipv6CidrBlock": {
+                            "type": "integer",
+                            "description": "Number of bits of IPv6 address used for rate limiting (0-128)."
+                        },
+                        "maxRateLimitedKeys": {
+                            "type": "integer",
+                            "description": "Maximum number of rate-limited keys tracked. LRU eviction when full."
+                        },
+                        "ipAddressExceptions": {
+                            "type": "array",
+                            "description": "IP address ranges exempt from rate limiting.",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        },
+        "postgresMigration": {
+            "type": "object",
+            "description": "Postgres migration configuration. Controls which storage backend is used for conversations.",
+            "required": [
+                "conversation"
+            ],
+            "properties": {
+                "conversation": {
+                    "type": "string",
+                    "description": "Storage location for conversations. Valid values: 'cassandra' or 'postgresql'.",
+                    "enum": [
+                        "cassandra",
+                        "postgresql"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "postgresqlPool": {
+            "type": "object",
+            "description": "PostgreSQL connection pool configuration.",
+            "additionalProperties": true
+        },
+        "federator": {
+            "type": "object",
+            "description": "Federator endpoint. Optional.",
+            "additionalProperties": true,
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rabbitmq": {
+            "type": "object",
+            "description": "RabbitMQ/AMQP endpoint configuration. Required when federation is enabled.",
+            "additionalProperties": true
+        },
+        "journal": {
+            "type": "object",
+            "description": "Journaling options for team events. Optional; omitting disables journaling.",
+            "additionalProperties": true,
+            "properties": {
+                "queueName": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            }
+        },
+        "discoUrl": {
+            "type": "string",
+            "description": "Disco URL for service discovery. Optional."
+        },
+        "postgresqlPassword": {
+            "type": "string",
+            "description": "File path to PostgreSQL password secrets file. Optional."
+        }
+    }
+}

@@ -1,0 +1,1144 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "wire-server-5.26.10/brig",
+    "title": "Brig ConfigMap",
+    "description": "Schema for Wire brig (user accounts service) configuration. Derived from Haskell source: services/brig/src/Brig/Options.hs at chart/5.26.10",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "brig",
+        "cargohold",
+        "galley",
+        "spar",
+        "gundeck",
+        "cassandra",
+        "elasticsearch",
+        "postgresql",
+        "postgresqlPool",
+        "rabbitmq",
+        "aws",
+        "emailSMS",
+        "zauth",
+        "internalEvents",
+        "logLevel",
+        "turn",
+        "optSettings"
+    ],
+    "properties": {
+        "logLevel": {
+            "type": "string",
+            "enum": [
+                "Trace",
+                "Debug",
+                "Info",
+                "Warn",
+                "Error",
+                "Fatal"
+            ],
+            "description": "[source: services/brig/src/Brig/Options.hs:429 @chart/5.26.10]"
+        },
+        "logFormat": {
+            "type": "string",
+            "description": "Optional. Defaults to unset. [source: services/brig/src/Brig/Options.hs:435 @chart/5.26.10]",
+            "enum": [
+                "JSON",
+                "Plain",
+                "Netstring",
+                "StructuredJSON"
+            ]
+        },
+        "logNetStrings": {
+            "type": "boolean",
+            "description": "Optional. Deprecated in favor of logFormat. [source: services/brig/src/Brig/Options.hs:432 @chart/5.26.10]"
+        },
+        "randomPrekeys": {
+            "type": "boolean",
+            "description": "Optional. Enable random prekey strategy. [source: services/brig/src/Brig/Options.hs:407 @chart/5.26.10]"
+        },
+        "multiSFT": {
+            "type": "boolean",
+            "description": "Optional. SFT federation toggle. [source: services/brig/src/Brig/Options.hs:401 @chart/5.26.10]"
+        },
+        "discoUrl": {
+            "type": "string",
+            "description": "Optional. Service discovery URL. [source: services/brig/src/Brig/Options.hs:421 @chart/5.26.10]"
+        },
+        "brig": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:376 @chart/5.26.10]"
+        },
+        "cargohold": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:378 @chart/5.26.10]"
+        },
+        "galley": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:380 @chart/5.26.10]"
+        },
+        "spar": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:382 @chart/5.26.10]"
+        },
+        "gundeck": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:384 @chart/5.26.10]"
+        },
+        "federatorInternal": {
+            "type": "object",
+            "description": "Optional. Federator endpoint. [source: services/brig/src/Brig/Options.hs:386 @chart/5.26.10]",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            }
+        },
+        "wireServerEnterprise": {
+            "type": "object",
+            "description": "Optional. Wire Server Enterprise endpoint. [source: services/brig/src/Brig/Options.hs:388 @chart/5.26.10]",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                }
+            }
+        },
+        "cassandra": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "endpoint",
+                "keyspace"
+            ],
+            "properties": {
+                "endpoint": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "host",
+                        "port"
+                    ],
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "description": "[source: services/brig/src/Brig/Options.hs:147 @chart/5.26.10]"
+                        }
+                    }
+                },
+                "keyspace": { "type": "string" },
+                "filterNodesByDatacentre": { "type": "string" },
+                "tlsCa": { "type": "string" }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:392 @chart/5.26.10]"
+        },
+        "elasticsearch": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "ElasticSearch connection. Requires url (not host/port). [source: services/brig/src/Brig/Options.hs:394 @chart/5.26.10]",
+            "required": [
+                "url",
+                "index",
+                "insecureSkipVerifyTls",
+                "additionalInsecureSkipVerifyTls"
+            ],
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "ES server URL, e.g. https://elasticsearch:9200 [source: services/brig/src/Brig/Options.hs:65 @chart/5.26.10]"
+                },
+                "index": {
+                    "type": "string",
+                    "description": "ES index name [source: services/brig/src/Brig/Options.hs:67 @chart/5.26.10]"
+                },
+                "additionalWriteIndex": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:76 @chart/5.26.10]"
+                },
+                "additionalWriteIndexUrl": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:81 @chart/5.26.10]"
+                },
+                "credentials": {
+                    "type": "string",
+                    "description": "File path to ES credentials [source: services/brig/src/Brig/Options.hs:83 @chart/5.26.10]"
+                },
+                "additionalCredentials": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:85 @chart/5.26.10]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:86 @chart/5.26.10]"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:87 @chart/5.26.10]"
+                },
+                "additionalInsecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:88 @chart/5.26.10]"
+                },
+                "additionalCaCert": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:89 @chart/5.26.10]"
+                }
+            }
+        },
+        "postgresql": {
+            "type": "object",
+            "description": "PostgreSQL connection as libpq key=value map. Typical keys: host, port, user, dbname, password, sslmode. [source: services/brig/src/Brig/Options.hs:397 @chart/5.26.10]",
+            "additionalProperties": { "type": "string" }
+        },
+        "postgresqlPassword": {
+            "type": "string",
+            "description": "Optional. File path to PostgreSQL password. [source: services/brig/src/Brig/Options.hs:398 @chart/5.26.10]"
+        },
+        "postgresqlPool": {
+            "type": "object",
+            "description": "PostgreSQL connection pool configuration. [source: services/brig/src/Brig/Options.hs:399 @chart/5.26.10]",
+            "additionalProperties": true,
+            "required": [
+                "size",
+                "acquisitionTimeout",
+                "agingTimeout",
+                "idlenessTimeout"
+            ],
+            "properties": {
+                "size": {
+                    "type": "integer",
+                    "description": "Number of connections in the pool [source: libs/extended/src/Hasql/Pool/Extended.hs:46 @chart/5.26.10]"
+                },
+                "acquisitionTimeout": {
+                    "type": "string",
+                    "description": "Duration string, e.g. '30s', '5m'. Max time to wait for a connection. [source: libs/extended/src/Hasql/Pool/Extended.hs:37 @chart/5.26.10]"
+                },
+                "agingTimeout": {
+                    "type": "string",
+                    "description": "Duration string. Max lifetime of a connection. [source: libs/extended/src/Hasql/Pool/Extended.hs:38 @chart/5.26.10]"
+                },
+                "idlenessTimeout": {
+                    "type": "string",
+                    "description": "Duration string. Max idle time before connection is closed. [source: libs/extended/src/Hasql/Pool/Extended.hs:39 @chart/5.26.10]"
+                }
+            }
+        },
+        "rabbitmq": {
+            "type": "object",
+            "description": "RabbitMQ endpoint. [source: services/brig/src/Brig/Options.hs:403 @chart/5.26.10]",
+            "additionalProperties": true,
+            "required": [
+                "host",
+                "port",
+                "vHost"
+            ],
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:106 @chart/5.26.10]"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:95 @chart/5.26.10]"
+                },
+                "vHost": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:96 @chart/5.26.10]"
+                },
+                "enableTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:83 @chart/5.26.10]"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:88 @chart/5.26.10]"
+                },
+                "insecureSkipVerifyTls": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "[source: libs/extended/src/Network/AMQP/Extended.hs:77 @chart/5.26.10]"
+                }
+            }
+        },
+        "stomp": {
+            "type": "object",
+            "description": "Optional. STOMP connection settings. [source: services/brig/src/Brig/Options.hs:457 @chart/5.26.10]",
+            "additionalProperties": true,
+            "required": [
+                "stomHost",
+                "stomPort",
+                "stomTls"
+            ],
+            "properties": {
+                "stomHost": { "type": "string" },
+                "stomPort": { "type": "integer" },
+                "stomTls": { "type": "boolean" }
+            }
+        },
+        "aws": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "prekeyTable",
+                "sqsEndpoint"
+            ],
+            "properties": {
+                "userJournalQueue": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:98 @chart/5.26.10]"
+                },
+                "prekeyTable": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:100 @chart/5.26.10]"
+                },
+                "sqsEndpoint": {
+                    "type": "string",
+                    "description": "URL like https://sqs.eu-west-1.amazonaws.com [source: services/brig/src/Brig/Options.hs:102 @chart/5.26.10]"
+                },
+                "dynamoDBEndpoint": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:104 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:405 @chart/5.26.10]"
+        },
+        "emailSMS": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "email",
+                "general",
+                "user",
+                "provider",
+                "team"
+            ],
+            "properties": {
+                "email": {
+                    "type": "object",
+                    "description": "Either AWS SES config (sesQueue + sesEndpoint) or SMTP config (smtpEndpoint + smtpConnType). Parser tries AWS first, then SMTP.",
+                    "additionalProperties": true
+                },
+                "general": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "templateDir",
+                        "emailSender",
+                        "smsSender",
+                        "templateBranding"
+                    ],
+                    "properties": {
+                        "templateDir": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:163 @chart/5.26.10]"
+                        },
+                        "emailSender": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:165 @chart/5.26.10]"
+                        },
+                        "smsSender": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:169 @chart/5.26.10]"
+                        },
+                        "templateBranding": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                                "brand",
+                                "brandUrl",
+                                "brandLabelUrl",
+                                "brandLogoUrl",
+                                "brandService",
+                                "copyright",
+                                "misuse",
+                                "legal",
+                                "forgot",
+                                "support"
+                            ],
+                            "properties": {
+                                "brand": { "type": "string" },
+                                "brandUrl": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:180 @chart/5.26.10]"
+                                },
+                                "brandLabelUrl": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:181 @chart/5.26.10]"
+                                },
+                                "brandLogoUrl": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:182 @chart/5.26.10]"
+                                },
+                                "brandService": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:183 @chart/5.26.10]"
+                                },
+                                "copyright": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:184 @chart/5.26.10]"
+                                },
+                                "misuse": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:185 @chart/5.26.10]"
+                                },
+                                "legal": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:186 @chart/5.26.10]"
+                                },
+                                "forgot": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:187 @chart/5.26.10]"
+                                },
+                                "support": {
+                                    "type": "string",
+                                    "description": "[source: services/brig/src/Brig/Options.hs:188 @chart/5.26.10]"
+                                }
+                            },
+                            "description": "[source: services/brig/src/Brig/Options.hs:172 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:253 @chart/5.26.10]"
+                },
+                "user": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "activationUrl",
+                        "smsActivationUrl",
+                        "passwordResetUrl",
+                        "deletionUrl"
+                    ],
+                    "properties": {
+                        "activationUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:196 @chart/5.26.10]"
+                        },
+                        "smsActivationUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:198 @chart/5.26.10]"
+                        },
+                        "passwordResetUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:200 @chart/5.26.10]"
+                        },
+                        "deletionUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:202 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:254 @chart/5.26.10]"
+                },
+                "provider": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "homeUrl",
+                        "providerActivationUrl",
+                        "approvalUrl",
+                        "approvalTo",
+                        "providerPwResetUrl"
+                    ],
+                    "properties": {
+                        "homeUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:211 @chart/5.26.10]"
+                        },
+                        "providerActivationUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:213 @chart/5.26.10]"
+                        },
+                        "approvalUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:215 @chart/5.26.10]"
+                        },
+                        "approvalTo": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:217 @chart/5.26.10]"
+                        },
+                        "providerPwResetUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:219 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:255 @chart/5.26.10]"
+                },
+                "team": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "tInvitationUrl",
+                        "tExistingUserInvitationUrl",
+                        "tActivationUrl",
+                        "tCreatorWelcomeUrl",
+                        "tMemberWelcomeUrl"
+                    ],
+                    "properties": {
+                        "tInvitationUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:227 @chart/5.26.10]"
+                        },
+                        "tExistingUserInvitationUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:229 @chart/5.26.10]"
+                        },
+                        "tActivationUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:231 @chart/5.26.10]"
+                        },
+                        "tCreatorWelcomeUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:233 @chart/5.26.10]"
+                        },
+                        "tMemberWelcomeUrl": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:235 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:256 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:413 @chart/5.26.10]"
+        },
+        "zauth": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "privateKeys",
+                "publicKeys",
+                "authSettings"
+            ],
+            "properties": {
+                "privateKeys": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:291 @chart/5.26.10]"
+                },
+                "publicKeys": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:293 @chart/5.26.10]"
+                },
+                "authSettings": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "keyIndex",
+                        "userTokenTimeout",
+                        "sessionTokenTimeout",
+                        "accessTokenTimeout",
+                        "providerTokenTimeout",
+                        "legalHoldUserTokenTimeout",
+                        "legalHoldAccessTokenTimeout"
+                    ],
+                    "properties": {
+                        "keyIndex": { "type": "integer" },
+                        "userTokenTimeout": { "type": "integer", "description": "Seconds" },
+                        "sessionTokenTimeout": { "type": "integer", "description": "Seconds" },
+                        "accessTokenTimeout": { "type": "integer", "description": "Seconds" },
+                        "providerTokenTimeout": { "type": "integer", "description": "Seconds" },
+                        "legalHoldUserTokenTimeout": { "type": "integer", "description": "Seconds" },
+                        "legalHoldAccessTokenTimeout": { "type": "integer", "description": "Seconds" }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:295 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:417 @chart/5.26.10]"
+        },
+        "turn": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "serversSource",
+                "secret",
+                "tokenTTL",
+                "configTTL"
+            ],
+            "properties": {
+                "serversSource": {
+                    "type": "string",
+                    "enum": [
+                        "files",
+                        "dns"
+                    ],
+                    "description": "When 'files': servers + serversV2 required. When 'dns': baseDomain required. [source: services/brig/src/Brig/Options.hs:304 @chart/5.26.10]"
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "File path to TURN shared secret [source: services/brig/src/Brig/Options.hs:306 @chart/5.26.10]"
+                },
+                "tokenTTL": {
+                    "type": "integer",
+                    "description": "TURN credential validity in seconds [source: services/brig/src/Brig/Options.hs:309 @chart/5.26.10]"
+                },
+                "configTTL": {
+                    "type": "integer",
+                    "description": "TURN config fetch interval in seconds [source: services/brig/src/Brig/Options.hs:312 @chart/5.26.10]"
+                },
+                "servers": {
+                    "type": "string",
+                    "description": "Required when serversSource=files [source: services/brig/src/Brig/Options.hs:343 @chart/5.26.10]"
+                },
+                "serversV2": {
+                    "type": "string",
+                    "description": "Required when serversSource=files [source: services/brig/src/Brig/Options.hs:344 @chart/5.26.10]"
+                },
+                "baseDomain": {
+                    "type": "string",
+                    "description": "Required when serversSource=dns [source: services/brig/src/Brig/Options.hs:355 @chart/5.26.10]"
+                },
+                "discoveryIntervalSeconds": {
+                    "type": "number",
+                    "description": "[source: services/brig/src/Brig/Options.hs:356 @chart/5.26.10]"
+                }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:437 @chart/5.26.10]"
+        },
+        "sft": {
+            "type": "object",
+            "description": "Optional. SFT (Ogg conference calling) settings. [source: services/brig/src/Brig/Options.hs:439 @chart/5.26.10]",
+            "additionalProperties": true,
+            "required": [
+                "sftBaseDomain"
+            ],
+            "properties": {
+                "sftBaseDomain": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:764 @chart/5.26.10]"
+                },
+                "sftSRVServiceName": {
+                    "type": "string",
+                    "description": "Default: _sft [source: services/brig/src/Brig/Options.hs:754 @chart/5.26.10]"
+                },
+                "sftDiscoveryIntervalSeconds": {
+                    "type": "number",
+                    "description": "Default: 10 [source: services/brig/src/Brig/Options.hs:755 @chart/5.26.10]"
+                },
+                "sftListLength": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Default: 5 [source: services/brig/src/Brig/Options.hs:756 @chart/5.26.10]"
+                },
+                "sftToken": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "ttl",
+                        "secret"
+                    ],
+                    "properties": {
+                        "ttl": {
+                            "type": "integer",
+                            "description": "[source: services/brig/src/Brig/Options.hs:779 @chart/5.26.10]"
+                        },
+                        "secret": {
+                            "type": "string",
+                            "description": "[source: services/brig/src/Brig/Options.hs:306 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:768 @chart/5.26.10]"
+                }
+            }
+        },
+        "internalEvents": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "queueType",
+                "queueName"
+            ],
+            "properties": {
+                "queueType": {
+                    "type": "string",
+                    "enum": [
+                        "stomp",
+                        "sqs"
+                    ]
+                },
+                "queueName": { "type": "string" }
+            },
+            "description": "[source: services/brig/src/Brig/Options.hs:425 @chart/5.26.10]"
+        },
+        "optSettings": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "setActivationTimeout",
+                "setTeamInvitationTimeout",
+                "setUserMaxConnections",
+                "setCookieInsecure",
+                "setUserCookieRenewAge",
+                "setUserCookieLimit",
+                "setUserCookieThrottle",
+                "setRichInfoLimit",
+                "setMaxTeamSize",
+                "setMaxConvSize",
+                "setEmailVisibility",
+                "setFederationDomain",
+                "setDisabledAPIVersions",
+                "setPasswordHashingOptions",
+                "setPasswordHashingRateLimit",
+                "setChallengeTTL",
+                "setEphemeralUserCreationEnabled"
+            ],
+            "properties": {
+                "setActivationTimeout": {
+                    "type": "integer",
+                    "description": "Seconds [source: services/brig/src/Brig/Options.hs:448 @chart/5.26.10]"
+                },
+                "setVerificationTimeout": {
+                    "type": "integer",
+                    "description": "Optional. Default: 600 (10 min) [source: services/brig/src/Brig/Options.hs:451 @chart/5.26.10]"
+                },
+                "setTeamInvitationTimeout": {
+                    "type": "integer",
+                    "description": "Seconds [source: services/brig/src/Brig/Options.hs:453 @chart/5.26.10]"
+                },
+                "setExpiredUserCleanupTimeout": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:455 @chart/5.26.10]"
+                },
+                "setStomp": {
+                    "type": "string",
+                    "description": "File path to STOMP secrets [source: services/brig/src/Brig/Options.hs:457 @chart/5.26.10]"
+                },
+                "setAllowlistEmailDomains": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "[source: services/brig/src/Brig/Options.hs:459 @chart/5.26.10]"
+                },
+                "setUserMaxConnections": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:462 @chart/5.26.10]"
+                },
+                "setUserMaxPermClients": {
+                    "type": "integer",
+                    "description": "Optional. Default: 7 [source: services/brig/src/Brig/Options.hs:464 @chart/5.26.10]"
+                },
+                "setCookieInsecure": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:467 @chart/5.26.10]"
+                },
+                "setUserCookieRenewAge": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:470 @chart/5.26.10]"
+                },
+                "setUserCookieLimit": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:472 @chart/5.26.10]"
+                },
+                "setUserCookieThrottle": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "stdDev",
+                        "retryAfter"
+                    ],
+                    "properties": {
+                        "stdDev": { "type": "number" },
+                        "retryAfter": { "type": "integer", "description": "Seconds" }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:475 @chart/5.26.10]"
+                },
+                "setLimitFailedLogins": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "timeout",
+                        "retryLimit"
+                    ],
+                    "properties": {
+                        "timeout": {
+                            "type": "integer",
+                            "description": "[source: services/brig/src/Brig/Options.hs:273 @chart/5.26.10]"
+                        },
+                        "retryLimit": {
+                            "type": "integer",
+                            "description": "[source: services/brig/src/Brig/Options.hs:275 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:479 @chart/5.26.10]"
+                },
+                "setSuspendInactiveUsers": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "suspendTimeout"
+                    ],
+                    "properties": {
+                        "suspendTimeout": { "type": "integer" }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:482 @chart/5.26.10]"
+                },
+                "setRichInfoLimit": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:486 @chart/5.26.10]"
+                },
+                "setDefaultTemplateLocale": {
+                    "type": "string",
+                    "description": "Optional. Default: en [source: services/brig/src/Brig/Options.hs:489 @chart/5.26.10]"
+                },
+                "setDefaultUserLocale": {
+                    "type": "string",
+                    "description": "Optional. Default: en [source: services/brig/src/Brig/Options.hs:492 @chart/5.26.10]"
+                },
+                "setMaxTeamSize": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:495 @chart/5.26.10]"
+                },
+                "setMaxConvSize": {
+                    "type": "integer",
+                    "description": "[source: services/brig/src/Brig/Options.hs:498 @chart/5.26.10]"
+                },
+                "setProviderSearchFilter": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:501 @chart/5.26.10]"
+                },
+                "setEmailVisibility": {
+                    "type": "string",
+                    "enum": [
+                        "visible_if_on_team",
+                        "visible_if_on_same_team",
+                        "visible_to_self"
+                    ],
+                    "description": "[source: services/brig/src/Brig/Options.hs:503 @chart/5.26.10]"
+                },
+                "setPropertyMaxKeyLen": {
+                    "type": "integer",
+                    "description": "Optional. Default: 1024 [source: services/brig/src/Brig/Options.hs:504 @chart/5.26.10]"
+                },
+                "setPropertyMaxValueLen": {
+                    "type": "integer",
+                    "description": "Optional. Default: 524288 [source: services/brig/src/Brig/Options.hs:505 @chart/5.26.10]"
+                },
+                "setDeleteThrottleMillis": {
+                    "type": "integer",
+                    "description": "Optional. Default: 100 [source: services/brig/src/Brig/Options.hs:509 @chart/5.26.10]"
+                },
+                "setSearchSameTeamOnly": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:512 @chart/5.26.10]"
+                },
+                "setFederationDomain": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:523 @chart/5.26.10]"
+                },
+                "setFederationStrategy": {
+                    "type": "string",
+                    "description": "Optional. Default: allowNone [source: services/brig/src/Brig/Options.hs:526 @chart/5.26.10]",
+                    "enum": [
+                        "allowNone",
+                        "allowAll",
+                        "allowDynamic"
+                    ]
+                },
+                "setFederationDomainConfigs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                            "domain",
+                            "search_policy"
+                        ],
+                        "properties": {
+                            "domain": { "type": "string" },
+                            "search_policy": { "type": "string" }
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:533 @chart/5.26.10]"
+                },
+                "setFederationDomainConfigsUpdateFreq": {
+                    "type": "integer",
+                    "description": "Optional. Default: 10 seconds [source: services/brig/src/Brig/Options.hs:536 @chart/5.26.10]"
+                },
+                "setSqsThrottleMillis": {
+                    "type": "integer",
+                    "description": "Optional. Default: 500 [source: services/brig/src/Brig/Options.hs:545 @chart/5.26.10]"
+                },
+                "setRestrictUserCreation": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:548 @chart/5.26.10]"
+                },
+                "setFeatureFlags": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "[source: services/brig/src/Brig/Options.hs:550 @chart/5.26.10]"
+                },
+                "setCustomerExtensions": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "domainsBlockedForRegistration"
+                    ],
+                    "properties": {
+                        "domainsBlockedForRegistration": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "description": "[source: services/brig/src/Brig/Options.hs:742 @chart/5.26.10]"
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:552 @chart/5.26.10]"
+                },
+                "setSftStaticUrl": {
+                    "type": "string",
+                    "description": "HTTPS URL [source: services/brig/src/Brig/Options.hs:557 @chart/5.26.10]"
+                },
+                "setSftListAllServers": {
+                    "type": "string",
+                    "enum": [
+                        "enabled",
+                        "disabled"
+                    ],
+                    "description": "[source: services/brig/src/Brig/Options.hs:562 @chart/5.26.10]"
+                },
+                "setEnableMLS": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:563 @chart/5.26.10]"
+                },
+                "setKeyPackageMaximumLifetime": {
+                    "type": "number",
+                    "description": "[source: services/brig/src/Brig/Options.hs:564 @chart/5.26.10]"
+                },
+                "setDisabledAPIVersions": {
+                    "type": "array",
+                    "description": "Array of version strings: v0..v12 or 'development' [source: services/brig/src/Brig/Options.hs:566 @chart/5.26.10]",
+                    "items": { "type": "string" }
+                },
+                "set2FACodeGenerationDelaySecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 300 [source: services/brig/src/Brig/Options.hs:569 @chart/5.26.10]"
+                },
+                "setNonceTtlSecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 300 [source: services/brig/src/Brig/Options.hs:572 @chart/5.26.10]"
+                },
+                "setDpopMaxSkewSecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 1 [source: services/brig/src/Brig/Options.hs:575 @chart/5.26.10]"
+                },
+                "setDpopTokenExpirationTimeSecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 30 [source: services/brig/src/Brig/Options.hs:578 @chart/5.26.10]"
+                },
+                "setPublicKeyBundle": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:581 @chart/5.26.10]"
+                },
+                "setOAuthJwkKeyPair": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:583 @chart/5.26.10]"
+                },
+                "setOAuthAccessTokenExpirationTimeSecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 1814400 (3 weeks) [source: services/brig/src/Brig/Options.hs:586 @chart/5.26.10]"
+                },
+                "setOAuthAuthorizationCodeExpirationTimeSecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 300 [source: services/brig/src/Brig/Options.hs:589 @chart/5.26.10]"
+                },
+                "setOAuthEnabled": {
+                    "type": "boolean",
+                    "description": "Optional. Default: false [source: services/brig/src/Brig/Options.hs:592 @chart/5.26.10]"
+                },
+                "setOAuthRefreshTokenExpirationTimeSecs": {
+                    "type": "integer",
+                    "description": "Optional. Default: 14515200 (24 weeks) [source: services/brig/src/Brig/Options.hs:595 @chart/5.26.10]"
+                },
+                "setOAuthMaxActiveRefreshTokens": {
+                    "type": "integer",
+                    "description": "Optional. Default: 10 [source: services/brig/src/Brig/Options.hs:598 @chart/5.26.10]"
+                },
+                "setPasswordHashingOptions": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "algorithm"
+                    ],
+                    "description": "When algorithm=argon2id: iterations, memory, parallelism are required. When algorithm=scrypt: no additional fields. [source: services/brig/src/Brig/Options.hs:600 @chart/5.26.10]",
+                    "properties": {
+                        "algorithm": {
+                            "type": "string",
+                            "enum": [
+                                "argon2id",
+                                "scrypt"
+                            ]
+                        },
+                        "iterations": { "type": "integer" },
+                        "memory": { "type": "integer" },
+                        "parallelism": { "type": "integer" }
+                    }
+                },
+                "setPasswordHashingRateLimit": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "required": [
+                        "ipAddrLimit",
+                        "userLimit",
+                        "internalLimit",
+                        "ipv4CidrBlock",
+                        "ipv6CidrBlock",
+                        "maxRateLimitedKeys",
+                        "ipAddressExceptions"
+                    ],
+                    "properties": {
+                        "ipAddrLimit": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                                "burst",
+                                "inverseRate"
+                            ],
+                            "properties": {
+                                "burst": { "type": "integer" },
+                                "inverseRate": {
+                                    "type": "integer",
+                                    "description": "Microseconds per operation; 0 = no rate limiting"
+                                }
+                            }
+                        },
+                        "userLimit": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                                "burst",
+                                "inverseRate"
+                            ],
+                            "properties": {
+                                "burst": { "type": "integer" },
+                                "inverseRate": { "type": "integer" }
+                            }
+                        },
+                        "internalLimit": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "required": [
+                                "burst",
+                                "inverseRate"
+                            ],
+                            "properties": {
+                                "burst": { "type": "integer" },
+                                "inverseRate": { "type": "integer" }
+                            }
+                        },
+                        "ipv4CidrBlock": { "type": "integer", "minimum": 0, "maximum": 32 },
+                        "ipv6CidrBlock": { "type": "integer", "minimum": 0, "maximum": 128 },
+                        "maxRateLimitedKeys": { "type": "integer" },
+                        "ipAddressExceptions": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    },
+                    "description": "[source: services/brig/src/Brig/Options.hs:601 @chart/5.26.10]"
+                },
+                "setAuditLogEmailRecipient": {
+                    "type": "string",
+                    "description": "[source: services/brig/src/Brig/Options.hs:603 @chart/5.26.10]"
+                },
+                "setChallengeTTL": {
+                    "type": "integer",
+                    "description": "Seconds [source: services/brig/src/Brig/Options.hs:605 @chart/5.26.10]"
+                },
+                "setEphemeralUserCreationEnabled": {
+                    "type": "boolean",
+                    "description": "[source: services/brig/src/Brig/Options.hs:607 @chart/5.26.10]"
+                }
+            }
+        }
+    }
+}
