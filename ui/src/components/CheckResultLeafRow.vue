@@ -155,51 +155,17 @@
 import { computed } from 'vue'
 
 // Ours
-import type { DataPoint } from '../sample-data'
 import { highlight_content, extract_yaml_entries_from_json } from '../lib/syntax_highlighter'
 import { render_markdown } from '../lib/markdown_renderer'
 import { format_value, format_duration, status_icon, status_label } from '../lib/format_utils'
+import type { CheckTreeLeafNode } from '../composables/use_result_trees'
 import DataPointRow from './DataPointRow.vue'
-
-// -- Types --
-
-// Shape of a leaf node produced by the use_result_trees composable
-interface TreeLeafNode {
-    key: string
-    data: {
-        name:           string
-        path:           string
-        description:    string
-        value:          string | number | boolean | undefined
-        unit:           string
-        status:         string
-        // What we found — explains why we arrived at this verdict
-        status_reason:  string
-        // How to fix this — actionable Markdown steps (empty for healthy checks)
-        fix_hint:       string
-        recommendation: string
-        raw_output:     string | null
-        configmap_data: string
-        // Why this check exists — always present, from the checker class
-        explanation:      string
-        // Actionable remediation steps (may contain markdown)
-        fix_hint:         string
-        // Collection context from the primary DataPoint
-        commands:         string[]
-        collected_at:     string
-        duration_seconds: number | undefined
-        gathered_from:    string
-        // DataPoints accessed by this checker
-        data_points_used: DataPoint[]
-        is_leaf:          true
-    }
-}
 
 // -- Props --
 
 const props = defineProps<{
     // The tree leaf node to render
-    node: TreeLeafNode
+    node: CheckTreeLeafNode
     // Left padding in pixels controls visual nesting depth
     indent_px: number
 }>()
