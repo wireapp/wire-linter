@@ -80,7 +80,7 @@ export class IngressResponseChecker extends BaseChecker {
                     status_reason: 'Ingress controller returned HTTP **{{http_status}}**.',
                     display_value: value,
                     raw_output: point.raw_output,
-                    template_data: { http_status: status_code },
+                    template_data: { http_status: value },
                 }
             }
 
@@ -113,7 +113,7 @@ export class IngressResponseChecker extends BaseChecker {
                     status_reason: `Ingress controller responded with "${value}".`,
                     display_value: value,
                     raw_output: point.raw_output,
-                    template_data: { http_status: status_code },
+                    template_data: { http_status: value },
                 }
             }
 
@@ -170,7 +170,7 @@ export class IngressResponseChecker extends BaseChecker {
                 recommendation,
                 display_value: value,
                 raw_output: point.raw_output,
-                template_data: { http_status: status_code },
+                template_data: { http_status: value },
             }
         }
 
