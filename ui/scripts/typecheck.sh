@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# Runs the TypeScript compiler against tsconfig.app.json, which is the config
-# VS Code actually uses for source files. The root tsconfig.json has "files": []
-# and only contains project references, so plain "npx tsc --noEmit" reports
-# zero errors even when real issues exist.
+# Uses vue-tsc instead of plain tsc. Plain tsc cannot type-check inside .vue
+# files, so it misses errors that VS Code (Volar) catches. vue-tsc uses the
+# same Volar engine and produces identical results to VS Code's diagnostics.
 
 cd "$(dirname "$0")/.." || exit 1
-npx tsc --noEmit -p tsconfig.app.json "$@"
+npx vue-tsc --noEmit "$@"
