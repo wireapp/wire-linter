@@ -77,7 +77,7 @@
                         <template v-if="expanded_keys[child.key]">
                             <CheckResultLeafRow
                                 v-for="leaf in as_group(child).children" :key="leaf.key"
-                                :node="leaf" :indent_px="52" v-model:open_panel="open_panel"
+                                :node="as_leaf(leaf)" :indent_px="52" v-model:open_panel="open_panel"
                             />
                         </template>
                     </template>
@@ -85,7 +85,7 @@
                     <!-- Direct leaf without a sub-group -->
                     <template v-else>
                         <CheckResultLeafRow
-                            :node="child" :indent_px="28" v-model:open_panel="open_panel"
+                            :node="as_leaf(child)" :indent_px="28" v-model:open_panel="open_panel"
                         />
                     </template>
                 </template>
@@ -99,7 +99,7 @@
 
 // Ours
 import type { CheckOutput } from '../checkers/base_checker'
-import type { CheckTreeGroupNode, CheckTreeNode } from '../composables/use_result_trees'
+import type { CheckTreeGroupNode, CheckTreeLeafNode, CheckTreeNode } from '../composables/use_result_trees'
 import { status_icon, status_label } from '../lib/format_utils'
 import CheckResultLeafRow from './CheckResultLeafRow.vue'
 import SummaryCards from './SummaryCards.vue'
@@ -126,6 +126,11 @@ const open_panel = defineModel<Record<string, string>>('open_panel', { required:
 // Narrows a union CheckTreeNode to its group variant for type-safe template access
 function as_group(node: CheckTreeNode): CheckTreeGroupNode {
     return node as CheckTreeGroupNode
+}
+
+// Narrows a union CheckTreeNode to its leaf variant for type-safe template access
+function as_leaf(node: CheckTreeNode): CheckTreeLeafNode {
+    return node as CheckTreeLeafNode
 }
 
 // -- Local toggle methods --
