@@ -15,7 +15,7 @@ import socket
 from typing import Any
 
 # Ours
-from src.lib.base_target import BaseTarget, NotApplicableError
+from src.lib.base_target import BaseTarget, NotApplicableError, SourceMode
 
 
 class ClientTurnReachable(BaseTarget):
@@ -25,8 +25,7 @@ class ClientTurnReachable(BaseTarget):
     """
 
     # Only runs in client mode
-    client_mode_only: bool = True
-    backend_mode_only: bool = False
+    source_mode: SourceMode = SourceMode.CLIENT
 
     @property
     def description(self) -> str:

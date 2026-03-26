@@ -19,6 +19,7 @@ Exceptions:
 from __future__ import annotations
 
 import datetime
+import enum
 import json
 import shlex
 import threading
@@ -86,6 +87,20 @@ class TargetResult:
     duration_seconds: float
 
 
+class SourceMode(enum.Enum):
+    """Which source mode a target runs in.
+
+    Controls whether a target is executed based on the --source CLI flag.
+    BACKEND targets run when --source is admin-host or ssh-into-admin-host.
+    CLIENT targets run when --source is client. BOTH targets run regardless
+    of the source mode.
+    """
+
+    BACKEND = 'backend'
+    CLIENT = 'client'
+    BOTH = 'both'
+
+
 class BaseTarget:
     """Base class for all information gathering targets.
 
@@ -136,14 +151,10 @@ class BaseTarget:
     # emit a not_applicable data point instead of running collect().
     requires_ssh: bool = False
 
-    # Set to True in subclasses that only run in client mode (--source client).
-    # When the source is not «client», these targets are skipped.
-    client_mode_only: bool = False
-
-    # Set to True in subclasses that only run in backend mode (--source admin-host
-    # or ssh-into-admin-host). When the source is «client», these targets are skipped.
-    # True by default because all existing targets are backend targets.
-    backend_mode_only: bool = True
+    # Which source mode this target runs in. BACKEND (default) targets only run
+    # with --source admin-host or ssh-into-admin-host. CLIENT targets only run
+    # with --source client. BOTH targets run regardless of source mode.
+    source_mode: SourceMode = SourceMode.BACKEND
 
     # Which cluster this target is relevant to: "both" (default), "main", or "calling".
     # Used with --cluster-type to filter targets. When the runner's cluster_type does
@@ -321,15 +332,16 @@ class BaseTarget:
         """
         start_time: float = time.monotonic()
 
-        # Client/backend mode gate
-        if self.config.gathered_from == 'client' and self.backend_mode_only:
+        # Source mode gate: skip targets whose source_mode doesn't match the runner
+        is_client_run: bool = self.config.gathered_from == 'client'
+        if is_client_run and self.source_mode == SourceMode.BACKEND:
             self.terminal.target_start(self._path)
             return [self._build_not_applicable_result(
                 path=self._path,
                 reason="Backend target, skipped in client mode",
                 start_time=start_time,
             )]
-        if self.config.gathered_from != 'client' and self.client_mode_only:
+        if not is_client_run and self.source_mode == SourceMode.CLIENT:
             self.terminal.target_start(self._path)
             return [self._build_not_applicable_result(
                 path=self._path,
@@ -464,14 +476,15 @@ class BaseTarget:
         # Clear accumulators so they don't leak from a previous run
         self._reset_accumulators()
 
-        # Client/backend mode gate: skip backend targets in client mode and vice versa
-        if self.config.gathered_from == 'client' and self.backend_mode_only:
+        # Source mode gate: skip targets whose source_mode doesn't match the runner
+        is_client_run: bool = self.config.gathered_from == 'client'
+        if is_client_run and self.source_mode == SourceMode.BACKEND:
             return self._build_not_applicable_result(
                 path=self.path,
                 reason="Backend target, skipped in client mode",
                 start_time=start_time,
             )
-        if self.config.gathered_from != 'client' and self.client_mode_only:
+        if not is_client_run and self.source_mode == SourceMode.CLIENT:
             return self._build_not_applicable_result(
                 path=self.path,
                 reason="Client target, skipped in backend mode",
