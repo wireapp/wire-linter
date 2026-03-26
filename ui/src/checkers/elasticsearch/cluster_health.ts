@@ -38,7 +38,7 @@ export class ClusterHealthChecker extends BaseChecker {
                 status_reason: 'Elasticsearch cluster health is **red**, meaning primary shards are unassigned and data loss may occur.',
                 fix_hint: '1. Check cluster health details: `curl -s http://localhost:9200/_cluster/health?pretty`\n2. List unassigned shards: `curl -s http://localhost:9200/_cat/shards?v&h=index,shard,prirep,state,unassigned.reason | grep UNASSIGNED`\n3. Check allocation explanation: `curl -s -X GET http://localhost:9200/_cluster/allocation/explain?pretty`\n4. Review node status: `curl -s http://localhost:9200/_cat/nodes?v`\n5. Check Elasticsearch logs on each node: `journalctl -u elasticsearch`\n6. If nodes are down, restart them and wait for shard recovery',
                 recommendation: 'Elasticsearch cluster is RED. Data loss may occur. Investigate immediately.',
-                display_value: point.value,
+                display_value: point.value ?? undefined,
                 raw_output: point.raw_output,
             }
         }
@@ -49,7 +49,7 @@ export class ClusterHealthChecker extends BaseChecker {
                 status_reason: 'Elasticsearch cluster health is **yellow**, meaning some replica shards are not allocated and redundancy is reduced.',
                 fix_hint: '1. Check cluster health details: `curl -s http://localhost:9200/_cluster/health?pretty`\n2. List unassigned replicas: `curl -s http://localhost:9200/_cat/shards?v&h=index,shard,prirep,state | grep UNASSIGNED`\n3. Check allocation explanation: `curl -s -X GET http://localhost:9200/_cluster/allocation/explain?pretty`\n4. Common causes: insufficient nodes for replica count, disk watermark reached, or node recently restarted\n5. Check disk usage: `curl -s http://localhost:9200/_cat/allocation?v`',
                 recommendation: 'Elasticsearch cluster is YELLOW. Some replicas not allocated. Check node capacity.',
-                display_value: point.value,
+                display_value: point.value ?? undefined,
                 raw_output: point.raw_output,
             }
         }
@@ -58,7 +58,7 @@ export class ClusterHealthChecker extends BaseChecker {
             return {
                 status: 'healthy',
                 status_reason: 'Elasticsearch cluster health is GREEN, all primary and replica shards are allocated.',
-                display_value: point.value,
+                display_value: point.value ?? undefined,
                 raw_output: point.raw_output,
             }
         }
@@ -68,7 +68,7 @@ export class ClusterHealthChecker extends BaseChecker {
             status: 'warning',
             status_reason: `Elasticsearch cluster reported unrecognized health status «${val}». This may indicate a problem or an unsupported Elasticsearch version.`,
             recommendation: `Elasticsearch cluster health status «${val}» is not a recognized value (expected green/yellow/red). Investigate the cluster status manually.`,
-            display_value: point.value,
+            display_value: point.value ?? undefined,
             raw_output: point.raw_output,
             template_data: { health_status: val },
         }
