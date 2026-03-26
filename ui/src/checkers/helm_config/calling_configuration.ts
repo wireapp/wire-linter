@@ -34,7 +34,6 @@ export class CallingConfigurationChecker extends BaseChecker {
 
         const calling_type: string = data.config?.options?.calling_type ?? 'on_prem'
         const expect_sft: boolean = data.config?.options?.expect_sft ?? false
-        const _calling_in_dmz: boolean = data.config?.options?.calling_in_dmz ?? false
 
         if (calling_type === 'cloud') {
             return { status: 'healthy', status_reason: 'Cloud calling — local calling pod checks are not applicable.', display_value: 'cloud calling' }
