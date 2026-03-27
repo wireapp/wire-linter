@@ -156,7 +156,7 @@ This flag can be combined with `--source admin-host` (default) or `--source ssh-
 2. In the UI, click **Next** to reach the Upload step
 3. Upload (or paste) the JSONL file
 4. The report appears immediately with:
-   - Summary cards showing healthy / warning / unhealthy counts
+   - Summary cards showing how many checks passed, had warnings, or failed
    - Interactive tree table with all check results grouped by category
    - Expandable details with raw command output for each check
    - Actionable recommendations for any warnings or failures
@@ -264,7 +264,7 @@ The file also contains a `GatheringConfig` line with the configuration used duri
 
 The UI runs the JSONL data through 172 checker classes that evaluate each data point as **healthy**, **warning**, **unhealthy**, **not_applicable**, or **gather_failure**. The results are displayed as:
 
-- **Summary cards** total checks, healthy count, warning count, unhealthy count
+- **Summary cards** total checks run, broken down by healthy, warning, and unhealthy
 - **Interactive tree table** check results grouped hierarchically by category (e.g. all Cassandra checks under "Cassandra", all Kubernetes checks under "Kubernetes")
 - **Data points tree** raw data points grouped by path prefix
 - **Config tab** the gathering configuration, Wire version, and deployment feature flags
